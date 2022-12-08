@@ -1,0 +1,94 @@
+from tkinter import*
+import tkinter.messagebox
+import math
+
+root=Tk()
+root.title("Scientific Calculator by Amritesh & Nawlesh")
+root.config(bg='#E3E3E3')
+root.geometry('473x580+100+100')
+
+entryField=Entry(root,font=('arial',20),fg='black',bg='#F2F2F2',bd=10,relief=SUNKEN,width=30)
+entryField.grid(row=0,column=0,columnspan=5)
+
+
+button_text_list=["π","2π","%","DEL","AC","deg","sinθ","cosθ","tanθ",chr(247),"rad","7","8","9","x","√","4","5","6","-",
+                  "log","1",
+                 "2","3","+","x!","e","0",".","="]
+def click(value):
+    ex=entryField.get()
+    answer=''
+    try:
+        
+        if value=='AC':
+            entryField.delete(0,END)
+        elif value=='DEL':
+            ex=ex[0:len(ex)-1]
+            entryField.delete(0,END)
+            entryField.insert(0,ex)
+            return
+        elif value=='√':
+            answer=math.sqrt(eval(ex))
+        elif value=='π':
+            answer=math.pi
+        elif value=='cosθ':
+            answer=math.cos(math.radians(eval(ex)))
+        elif value=='sinθ':
+            answer=math.sin(math.radians(eval(ex)))
+        elif value=='tanθ':
+            answer=math.tan(math.radians(eval(ex)))
+        elif value=='2π':
+            answer=2*math.pi
+        elif value=='log':
+            answer=math.log10(eval(ex))
+        elif value=='deg':
+            answer=math.degrees(eval(ex))
+        elif value=='rad':
+            answer=math.radians(eval(ex))
+        elif value=='x!':
+            answer=math.factorial(eval(ex))
+        elif value=='e':
+            answer=math.e
+        elif value==chr(247):
+            entryField.insert(END,"/")
+            return
+        elif value=='x':
+            entryField.insert(END,"*")
+            return
+        elif value=='+':
+            entryField.insert(END,"+")
+            return
+        elif value=='-':
+            entryField.insert(END,"-")
+            return
+        elif value=='=':
+            answer=(eval(ex))
+        else:
+            entryField.insert(END,value)
+            return
+
+        entryField.delete(0,END)
+        entryField.insert(0,answer)
+    except SyntaxError:
+        pass
+    
+     
+
+
+row_value=1
+column_value=0
+for i in button_text_list:
+    
+    button=Button(root,width=5,height=2,bd=2,relief=SUNKEN,text=i,bg='#F2F2F2',font=('arial',20,'italic'),
+                  fg='black',activeforeground='white',command=lambda button=i: click(button))
+    button.grid(row=row_value,column=column_value,pady=1)
+    column_value+=1
+    if(column_value>4):
+        column_value=0
+        row_value+=1
+
+
+
+
+
+
+root.mainloop()
